@@ -1,0 +1,30 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        market: ["usa","can"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & push image
+        env:
+          MARKET: ${{ matrix.market }}
+          SHA: ${{ github.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "[$MARKET] would build & push $REPO:$SHA"
+
+      - name: Sync ArgoCD app
+        env:
+          APP: test-p-insights-p-${{ matrix.market }}
+        run: |
+          echo "would run: argocd app sync $APP"

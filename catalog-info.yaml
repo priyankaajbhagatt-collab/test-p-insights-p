@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-p-insights-p
+  description: test-p-insights-p
+  annotations:
+    github.com/project-slug: priyankaajbhagatt-collab/test-p-insights-p
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - python
+    - fastapi
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user:guest
+  system: commerce-orderas

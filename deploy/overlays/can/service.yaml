@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-p-insights-p
+  labels:
+    app: test-p-insights-p
+    market: can
+    managed-by: backstage-scaffolder
+spec:
+  selector:
+    app: test-p-insights-p
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

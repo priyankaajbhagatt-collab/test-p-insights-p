@@ -1,0 +1,34 @@
+name: Auto-merge
+
+# Auto-merges PRs that have the `auto-merge` label once required checks pass.
+# Add the label via PR UI or via gh:
+#   gh pr edit <N> --add-label auto-merge
+#
+# To require zero-touch automation for ALL bot-opened PRs, also add the
+# `auto-merge` label automatically — see the `dependabot.yml` example.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'auto-merge')
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr merge "$PR_NUMBER" --auto --squash \
+            --subject "Auto-merge PR #$PR_NUMBER" \
+            --repo "${{ github.repository }}"
