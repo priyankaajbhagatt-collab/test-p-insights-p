@@ -6,6 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: priyankaajbhagatt-collab/test-p-insights-p
     backstage.io/techdocs-ref: dir:.
+    argocd/app-selector: service=test-p-insights-p
   tags:
     - python
     - fastapi
